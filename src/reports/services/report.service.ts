@@ -1,12 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateReportDto } from '../dtos/report.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Report } from '../entities/reports.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class ReportService {
-  constructor() {}
+  constructor(
+    @InjectRepository(Report) private reportRepository: Repository<Report>,
+  ) {}
 
   async findAll() {
-    return { message: 'success' };
+    return this.reportRepository.find({});
   }
 
   async findOne(id: number) {
