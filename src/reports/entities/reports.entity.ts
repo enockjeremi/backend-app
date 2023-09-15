@@ -20,8 +20,8 @@ export class Report {
   @Column({ type: 'varchar', length: '255', name: 'car_year' })
   carYear: string;
 
-  @Column({ type: 'text', name: 'report_fault' })
-  reportFault: Array<string>;
+  @Column('varchar', { array: true, name: 'report_fault', default: [] })
+  reportFault: string[];
 
   @Column({ type: 'text', name: 'report_diagnostic' })
   reportDiagnostic: string;

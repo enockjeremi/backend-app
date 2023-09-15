@@ -19,7 +19,8 @@ export class ReportService {
   }
 
   async create(payload: CreateReportDto) {
-    return { message: 'success', payload };
+    const newReport = this.reportRepository.create(payload);
+    return await this.reportRepository.save(newReport);
   }
 
   async update(payload: CreateReportDto, id: number) {
