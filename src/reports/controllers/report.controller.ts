@@ -8,7 +8,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { ReportService } from '../services/report.service';
-import { CreateReportDto } from '../dtos/report.dto';
+import { CreateReportDto, UpdateReportDto } from '../dtos/report.dto';
 
 @Controller('reports')
 export class ReportController {
@@ -29,7 +29,7 @@ export class ReportController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, payload: CreateReportDto) {
+  update(@Param('id') id: number, @Body() payload: UpdateReportDto) {
     return this.reportServices.update(payload, id);
   }
   @Delete(':id')

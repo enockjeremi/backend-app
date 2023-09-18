@@ -1,5 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateReportDto {
   @IsNotEmpty()
@@ -21,6 +21,10 @@ export class CreateReportDto {
   @IsNotEmpty()
   @IsArray()
   reportFault: Array<string>;
+
+  @IsOptional()
+  @IsArray()
+  reportDtc: Array<string>;
 
   @IsNotEmpty()
   @IsString()

@@ -23,6 +23,9 @@ export class Report {
   @Column('varchar', { array: true, name: 'report_fault', default: [] })
   reportFault: string[];
 
+  @Column('varchar', { array: true, name: 'report_dtc', default: [] })
+  reportDtc: string[];
+
   @Column({ type: 'text', name: 'report_diagnostic' })
   reportDiagnostic: string;
 
