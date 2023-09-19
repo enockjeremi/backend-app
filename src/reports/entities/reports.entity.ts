@@ -2,9 +2,13 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Categories } from './categories.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class Report {
@@ -35,7 +39,13 @@ export class Report {
   @Column({ type: 'varchar', length: '255' })
   mileage: string;
 
-  // @Exclude()
+  @ManyToOne(() => Categories, (category) => category.reports, {
+    nullable: true,
+  })
+  @JoinColumn({ name: 'category_name_id' })
+  categoryName: Categories;
+
+  @Exclude()
   @CreateDateColumn({
     type: 'timestamptz',
     name: 'create_at',
@@ -43,7 +53,7 @@ export class Report {
   })
   createAt: Date;
 
-  // @Exclude()
+  @Exclude()
   @UpdateDateColumn({
     type: 'timestamptz',
     name: 'update_at',

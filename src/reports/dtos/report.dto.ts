@@ -1,5 +1,12 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsPositive,
+  IsString,
+} from 'class-validator';
 
 export class CreateReportDto {
   @IsNotEmpty()
@@ -33,6 +40,11 @@ export class CreateReportDto {
   @IsNotEmpty()
   @IsString()
   mileage: string;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @IsPositive()
+  categoryNameId: number;
 }
 
 export class UpdateReportDto extends PartialType(CreateReportDto) {}
