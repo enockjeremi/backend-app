@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Report } from './reports.entity';
-import { Exclude } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
 
 @Entity()
 export class Categories {
@@ -35,4 +35,9 @@ export class Categories {
     default: () => 'CURRENT_TIMESTAMP',
   })
   updateAt: Date;
+
+  @Expose()
+  get totalReports(): number {
+    return this.reports?.length;
+  }
 }

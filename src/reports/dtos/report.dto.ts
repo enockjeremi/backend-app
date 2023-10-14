@@ -6,6 +6,7 @@ import {
   IsOptional,
   IsPositive,
   IsString,
+  Min,
 } from 'class-validator';
 
 export class CreateReportDto {
@@ -18,16 +19,17 @@ export class CreateReportDto {
   carModel: string;
 
   @IsNotEmpty()
-  @IsString()
-  carYear: string;
+  @IsNumber()
+  @IsPositive()
+  carYear: number;
 
   @IsNotEmpty()
   @IsString()
   reportDiagnostic: string;
 
   @IsNotEmpty()
-  @IsArray()
-  reportFault: Array<string>;
+  @IsString()
+  reportFault: string;
 
   @IsOptional()
   @IsArray()
@@ -38,8 +40,9 @@ export class CreateReportDto {
   reportFix: string;
 
   @IsNotEmpty()
-  @IsString()
-  mileage: string;
+  @IsNumber()
+  @IsPositive()
+  mileage: number;
 
   @IsNotEmpty()
   @IsNumber()
@@ -48,3 +51,27 @@ export class CreateReportDto {
 }
 
 export class UpdateReportDto extends PartialType(CreateReportDto) {}
+
+export class FilterReportDto {
+  @IsOptional()
+  @IsString()
+  filter: string;
+
+  @IsOptional()
+  @IsString()
+  by: string;
+
+  @IsOptional()
+  @IsString()
+  category: string;
+
+  @IsOptional()
+  @IsNumber()
+  @IsPositive()
+  limit: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  offset: number;
+}

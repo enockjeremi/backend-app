@@ -21,11 +21,11 @@ export class Report {
   @Column({ type: 'varchar', length: '255', name: 'car_model' })
   carModel: string;
 
-  @Column({ type: 'varchar', length: '255', name: 'car_year' })
-  carYear: string;
+  @Column({ type: 'int', name: 'car_year' })
+  carYear: number;
 
-  @Column('varchar', { array: true, name: 'report_fault', default: [] })
-  reportFault: string[];
+  @Column({ type: 'varchar', name: 'report_fault' })
+  reportFault: string;
 
   @Column('varchar', { array: true, name: 'report_dtc', default: [] })
   reportDtc: string[];
@@ -36,8 +36,8 @@ export class Report {
   @Column({ type: 'text', name: 'report_fix' })
   reportFix: string;
 
-  @Column({ type: 'varchar', length: '255' })
-  mileage: string;
+  @Column({ type: 'int' })
+  mileage: number;
 
   @ManyToOne(() => Categories, (category) => category.reports, {
     nullable: true,
