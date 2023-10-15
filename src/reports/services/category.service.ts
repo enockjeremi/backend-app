@@ -18,7 +18,7 @@ export class CategoryService {
   async findAll(params?: FilterCategoryDto) {
     if (params.category) {
       return this.categoryRepository.find({
-        where: { categoryName: params.category },
+        where: { categoryName: params.category.toLocaleLowerCase() },
         relations: ['reports'],
       });
     }
@@ -42,6 +42,7 @@ export class CategoryService {
   }
 
   async create(payload: CreateCategoryDto) {
+    payload.categoryName = payload.categoryName.toLowerCase();
     const newCategory = this.categoryRepository.create(payload);
     const saveCategory = await this.categoryRepository.save(newCategory);
     return { message: 'Category has been created', id: saveCategory.id };

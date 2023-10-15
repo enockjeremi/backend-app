@@ -17,20 +17,21 @@ export class ReportService {
   ) {}
 
   async findByFilter(filter: FilterReportDto) {
+    const filterLowerCase = filter.filter.toLowerCase();
     const totalItems = await this.reportRepository.count({
       where: [
-        { reportFault: Like(`%${filter.filter}%`) },
-        { reportName: Like(`%${filter.filter}%`) },
-        { carModel: Like(`%${filter.filter}%`) },
-        { reportDiagnostic: Like(`%${filter.filter}%`) },
+        { reportFault: Like(`%${filterLowerCase}%`) },
+        { reportName: Like(`%${filterLowerCase}%`) },
+        { carModel: Like(`%${filterLowerCase}%`) },
+        { reportDiagnostic: Like(`%${filterLowerCase}%`) },
       ],
     });
     const reports = await this.reportRepository.find({
       where: [
-        { reportFault: Like(`%${filter.filter}%`) },
-        { reportName: Like(`%${filter.filter}%`) },
-        { carModel: Like(`%${filter.filter}%`) },
-        { reportDiagnostic: Like(`%${filter.filter}%`) },
+        { reportFault: Like(`%${filterLowerCase}%`) },
+        { reportName: Like(`%${filterLowerCase}%`) },
+        { carModel: Like(`%${filterLowerCase}%`) },
+        { reportDiagnostic: Like(`%${filterLowerCase}%`) },
       ],
       order: { createAt: 'DESC' },
       take: filter.limit,
@@ -81,7 +82,7 @@ export class ReportService {
         relations: ['categoryName'],
         where: {
           categoryName: {
-            categoryName: params.category,
+            categoryName: params.category.toLowerCase(),
           },
         },
         skip: params.offset,
@@ -109,6 +110,13 @@ export class ReportService {
   }
 
   async create(payload: CreateReportDto) {
+    payload.carModel = payload.carModel.toLowerCase();
+    payload.reportName = payload.reportName.toLowerCase();
+    payload.reportFix = payload.reportFix.toLowerCase();
+    payload.reportDiagnostic = payload.reportDiagnostic.toLowerCase();
+    payload.reportFault = payload.reportFault.toLowerCase();
+    payload.reportDtc = payload.reportDtc.map((dtc) => dtc.toLowerCase());
+
     const newReport = this.reportRepository.create(payload);
     const categoryName = await this.categoryServices.findOne(
       payload.categoryNameId,
