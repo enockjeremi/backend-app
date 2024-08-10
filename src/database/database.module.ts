@@ -13,7 +13,7 @@ import config from 'src/config';
         return {
           type: 'postgres',
           host: postgres.host,
-          port: postgres.port,
+          port: parseInt(postgres.port),
           username: postgres.user,
           password: postgres.password,
           database: postgres.database,
